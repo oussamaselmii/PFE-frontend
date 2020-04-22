@@ -17,6 +17,7 @@ const routes = [
         component: () =>import("../views/frontend/Auth/login.vue"),
 
       },
+      
       {
         path: "/home",
         name:"home-page",
@@ -28,9 +29,40 @@ const routes = [
         name:"Register",
         component: () =>import("../views/frontend/Auth/Register.vue"),
 
+      },
+      {
+        path: "/log-out",
+        name:"log-out",
+        component: () =>import("../views/frontend/Auth/logOut.vue"),
+
       }
     ]
   },
+  {
+    path: "/admin-login",
+    name:"admin-login",
+    component: () =>import("../views/frontend/Auth/auth-master.vue"),
+     redirect:{path:'/admin-login/login'},
+       children:[
+        {
+         path:'login',
+         name:'login',
+         component:()=>import('../views/frontend/Auth/login.vue'),
+        },
+        {
+         path:'register',
+         name:'admin-register',
+         component:()=>import('../views/frontend/Auth/Register.vue'),
+        },
+    ]
+  },
+  {
+    path:'/dashboard',
+    name:'dashboard',
+    component:()=>import('../views/admin/admin-master.vue'),
+   },
+
+  
   {
     path: "/about",
     name: "About",
@@ -40,9 +72,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   }
+
 ];
 
 const router = new VueRouter({
+  mode: 'history',
+
   routes
 });
 

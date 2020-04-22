@@ -11,7 +11,7 @@
         <form>
           <v-layout column>
             <v-flex>
-              <v-text-field
+              <v-text-field v-model="user.email"
                 name="email"
                 label="Email"
                 id="email"
@@ -19,15 +19,16 @@
                 required></v-text-field>
             </v-flex>
             <v-flex>
-              <v-text-field
+              <v-text-field v-model="user.password"
                 name="password"
                 label="Password"
                 id="password"
                 type="password"
                 required></v-text-field>
             </v-flex>
-            <v-flex class="text-xs-center" mt-5>
-              <v-btn color="primary" type="submit">Login</v-btn>
+            <v-flex  class="text-xs-center" mt-5 >
+              <v-btn class="btn btn-primary" type="submit" @click="userLogin()" to="/login">Login</v-btn>
+              <router-link class="ma-5" to="register" >Register</router-link>
             </v-flex>
           </v-layout>
         </form>
@@ -39,6 +40,33 @@
 </template>
 <script>
 export default {
-    
+  data() {
+    return {
+      user:{
+        email:null,
+        password:null
+      }
+    }
+  },
+  methods:{
+        userLogin(){
+            axios.post('/login', {
+                email:this.user.email ,
+                password:this.user.password ,
+            })
+            .then(response=> {
+                
+                localStorage.setItem('AToken',response.data.data.access_token);
+                console.log(response);
+                this.$router.push({name:'dashboard'})
+            })
+            .catch(error=> {
+                console.log(error);
+            });      
+    }
+  },
+  
+  
+
 }
 </script>

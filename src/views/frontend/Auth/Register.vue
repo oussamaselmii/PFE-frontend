@@ -10,7 +10,15 @@
         <form>
           <v-layout column>
             <v-flex>
-              <v-text-field
+              <v-text-field v-model="user.name"
+                name="name"
+                label="name"
+                id="name"
+                type="text"
+                required></v-text-field>
+            </v-flex>
+            <v-flex>
+              <v-text-field v-model="user.email"
                 name="email"
                 label="Email"
                 id="email"
@@ -18,7 +26,7 @@
                 required></v-text-field>
             </v-flex>
             <v-flex>
-              <v-text-field
+              <v-text-field v-model="user.password"
                 name="password"
                 label="Password"
                 id="password"
@@ -26,17 +34,18 @@
                 required></v-text-field>
             </v-flex>
             <v-flex>
-              <v-text-field
+              <v-text-field 
                 name="confirmPassword"
-                label="Confirm Password"
+                label="confirmPassword"
                 id="confirmPassword"
                 type="password"
-                required
-                ></v-text-field>
+                required></v-text-field>
             </v-flex>
+              
             <v-flex class="text-xs-center" mt-5>
-              <v-btn color="primary" type="submit">
+              <v-btn class="btn btn-primary" to="/register" type="submit" @click="userRegister()" >
                   register</v-btn>
+                  <router-link class="ma-5" to="/login" >Login</router-link>
             </v-flex>
           </v-layout>
         </form>
@@ -49,6 +58,32 @@
 
 <script>
 export default {
+  data() {
+    return {
+      user:{
+        name:null,
+        email:null,
+        password:null
+      }
+    }
+  },
+  methods:{
+        userRegister(){
+            axios.post('/register', {
+                name:this.user.name ,
+                email:this.user.email ,
+                password:this.user.password ,
+            })
+            .then(function (response) {
+                
+                localStorage.setItem('AToken',response.data.access_token);
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });      
+    }
+  },
 
 }
 </script>
