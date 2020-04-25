@@ -60,6 +60,18 @@ const routes = [
     path:'/dashboard',
     name:'dashboard',
     component:()=>import('../views/admin/admin-master.vue'),
+    children:[
+      {
+       path:'add-category',
+       name:'add-category',
+       component:()=>import('../views/admin/category/add_category.vue'),
+      },
+      {
+        path:'all-category',
+        name:'all-category',
+        component:()=>import('../views/admin/category/all_categories.vue'),
+       },
+    ]
    },
 
   

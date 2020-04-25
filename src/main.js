@@ -14,7 +14,10 @@ axios.defaults.baseURL = 'http://localhost/PFE/back/backend/public/api';
 window.token = localStorage.getItem('AToken');
 axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+import { Form, HasError, AlertError } from 'vform'
+window.Form = Form,
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
 
 
 
