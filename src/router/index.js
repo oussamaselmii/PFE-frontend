@@ -71,6 +71,16 @@ const routes = [
         name:'all-category',
         component:()=>import('../views/admin/category/all_categories.vue'),
        },
+       {
+        path:'edit-category/:category_id',
+        name:'edit-category',
+        component:()=>import('../views/admin/category/edit_category.vue'),
+       },
+       {
+        path:'all-products',
+        name:'all-products',
+        component:()=>import('../views/admin/product/all-products.vue'),
+       },
     ]
    },
 

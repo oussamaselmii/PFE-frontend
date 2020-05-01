@@ -19,8 +19,8 @@
       <td>{{category.created_at}}</td>
       <td>
       <div class="btn-group">
-        <button class="btn btn-outline-warning">Edit</button>
-        <button class="btn btn-outline-danger">Edit</button>
+        <router-link :to="{name:'edit-category', params:{category_id:category.id}}" class="btn btn-outline-warning">Edit</router-link>
+        <button class="btn btn-outline-danger" @click="deleteCategory(category.id)">Delete</button>
       </div>
       </td>
     </tr>
@@ -43,6 +43,18 @@ export default {
             .then(response =>{
                 this.categories = response.data;
     })
+    },
+    deleteCategory(category_id){
+axios.delete('/category/'+category_id)
+.then(res=>{
+  iziToast.warning({
+          title: 'Warning',
+          message: 'Category delete succesfully',
+                    });
+  this.get_all_categories();
+  console.log(res);
+})
+
     }
   },
   mounted() {

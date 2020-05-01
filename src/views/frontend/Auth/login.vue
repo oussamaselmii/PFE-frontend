@@ -55,6 +55,10 @@ export default {
                 password:this.user.password ,
             })
             .then(response=> {
+              iziToast.success({
+                        title: 'Caution',
+                        message: 'Login successfully',
+              });
                 
                 localStorage.setItem('AToken',response.data.data.access_token);
                 console.log(response);

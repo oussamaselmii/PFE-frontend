@@ -1,7 +1,7 @@
 <template>
   <div>
-   <h2 class="text-center mb-3">Category Add</h2>
-     <form @submit.prevent="category_add()">
+   <h2 class="text-center mb-3">Edit Category</h2>
+     <form @submit.prevent="category_update()">
                   <div class="form-group row">
                     <label for="category_name" class="col-sm-2 col-form-label"
                       >Category Name</label
@@ -83,7 +83,7 @@
                   
                     <div class="col-sm-10">
                       <button type="submit" class="btn btn-primary">
-                        Add Category
+                        Update Category
                       </button>
                     </div>
                   </div>
@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import all_categoriesVue from './all_categories.vue';
 export default {
   data() {
     return {
@@ -104,12 +103,20 @@ export default {
     }
   },
   methods: {
-    category_add(){
-      this.form.post('/category',this.form)
-  .then(response=> {
-          iziToast.success({
+    singleCategory(){
+      axios.get('/category/'+this.$route.params.category_id)
+      .then(response=>{this.form.fill(response.data);
+      console.log(response.data);
+      })
+
+    },
+
+    category_update(){
+      this.form.put('/category/'+this.$route.params.category_id)
+    .then(response=> {
+      iziToast.info({
               title: 'OK',
-              message: 'Successfully inserted record!',
+              message: 'Successfully update record!',
           });
     this.$router.push({name:'all-category'});
     console.log(response);
@@ -118,6 +125,9 @@ export default {
     console.log(error);
   });
     }
+  },
+  mounted() {
+    this.singleCategory();
   },
 
 }

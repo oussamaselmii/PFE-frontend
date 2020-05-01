@@ -19,15 +19,32 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <router-link :to="{name:'all-category'}" class="nav-link active">
+                    <router-link :to="{name:'all-category'}" class="nav-link ">
                       <i class="far fa-circle nav-icon"></i>
                       <p>all category</p>
                     </router-link>
                   </li>
                   <li class="nav-item">
-                    <router-link :to="{name:'add-category'}" class="nav-link">
+                    <router-link :to="{name:'add-category'}" class="nav-link ">
                       <i class="far fa-circle nav-icon"></i>
                       <p>add category</p>
+                    </router-link>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item has-treeview menu-open">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Product
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <router-link :to="{name:'all-products'}" class="nav-link ">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>all products</p>
                     </router-link>
                   </li>
                 </ul>
