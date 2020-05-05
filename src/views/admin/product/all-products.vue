@@ -98,7 +98,7 @@
                     v-model="form.category_id"
                     :class="{ 'is-invalid': form.errors.has('category_id') }"
                   >
-                    <option>--------Select a Category--------</option>
+                    <option value="">-------Select a Category--------</option>
                     <option v-for="(category, index) in categories" :key="index">{{category.category_name}}</option>
                     
                   </select>
@@ -147,9 +147,14 @@
                   <has-error :form="form" field="product_price"></has-error>
                 </div>
                 <div class="form-group">
-                  <label for="product_image">Product Image</label>
-                  <div class="custom-file">
+                  <label for="product_image">Product Image</label><br>
+                  <!--img :src="form.product_image" alt="" class="img-fluid"-->
+
+                  <img :src=" imageUpdateMode ? 'http://localhost/PFE/back/backend/public/uploads/product_images/'+form.product_image : form.product_image" alt="" class="img-fluid">
+                  
+                  <div v-if="!form.product_image" class="custom-file">
                     <input
+                    @change="FileChangeEvent"
                       type="file"
                       class="custom-file-input"
                       id="product_image"
@@ -157,7 +162,13 @@
                     <label class="custom-file-label" for="product_image"
                       >Choose file...</label
                     >
-                  </div>
+                    
+                  
+                
+                </div>
+                <div v-else>
+                 <button @click="RemoveImage" type="button" class="btn btn-outline-warning mt-2">Remove image</button>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="publication_status">Publication Status</label>
@@ -199,6 +210,7 @@
                   </div>
                 </div>
               </div>
+            
               <div class="modal-footer">
                 <button
                   type="button"
@@ -228,7 +240,8 @@ export default {
     return {
       products: [],
       categories: [],
-      editMode:"false",
+      editMode:false,
+      imageUpdateMode: false,
       form: new Form({
         id:"",
         product_name: "",
@@ -236,11 +249,38 @@ export default {
         product_short_description: "",
         product_long_description: "",
         product_price: "",
+        product_image: "",
         publication_status: "",
       }),
     };
   },
   methods: {
+    FileChangeEvent(e){
+            this.imageUpdateMode=false;
+
+      var file = e.target.files[0];
+      const reader = new FileReader();
+      console.log(file['size']);
+      if(file['size'] < 2097152 ){
+      reader.onload = ()=>{
+        this.form.product_image = reader.result
+        iziToast.success({
+                 title: 'success',
+                 message: 'product Image is Ok = '+file['size'] / 1048576 +"MB",
+      });
+      }
+
+      reader.readAsDataURL(file);
+      }else{
+                iziToast.error({
+                    title: 'Warning',
+                    message: 'product Image is large = '+file['size'] / 1048576 +"MB",
+                });
+            }
+    },
+    RemoveImage(){
+    this.form.product_image = "";
+    },
     get_all_product() {
       axios
         .get("/all-product")
@@ -294,6 +334,7 @@ export default {
 
     },
     editProductModal(product){
+      this.imageUpdateMode=true;
       this.editMode=true;
      $('#product_modal').modal('show')
      this.form.fill(product);
