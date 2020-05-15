@@ -19,6 +19,12 @@ const routes = [
       },
       
       {
+        path: "/product-details/:product_id",
+        name:"product_details",
+        component: () =>import("../views/frontend/home/product-details.vue"),
+
+      },
+      {
         path: "/home",
         name:"home-page",
         component: () =>import("../views/frontend/home/home.vue"),

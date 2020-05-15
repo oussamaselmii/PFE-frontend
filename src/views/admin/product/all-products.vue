@@ -85,7 +85,7 @@
                     class="form-control"
                     v-model="form.product_name"
                     :class="{ 'is-invalid': form.errors.has('product_name') }"
-                    id=""
+                    id="product_name"
                     placeholder="enter product name"
                   />
                   <has-error :form="form" field="product_name"></has-error>
@@ -219,7 +219,7 @@
                 >
                   Close
                 </button>
-                <button v-if="editMode" type="submit" class="btn btn-primary">
+                <button  v-if="editMode" type="submit" class="btn btn-primary">
                   Update Product
                 </button>
                 <button v-else type="submit" class="btn btn-primary">
@@ -279,6 +279,8 @@ export default {
             }
     },
     RemoveImage(){
+    this.imageUpdateMode = false;
+
     this.form.product_image = "";
     },
     get_all_product() {
@@ -317,19 +319,21 @@ export default {
     },
     addProductModal(){
       this.form.reset();
-    $('#product_modal').modal('show');
-    this.editMode=false;
+      $('#product_modal').modal('show');
+      this.editMode=false;
 
 
     },
     product_delete(product_id){
       axios.delete("/all-product/"+product_id)
-      .then(response=>{
-        this.get_all_product();
+      .then((response)=>{
+        this.get_all_product(),
         iziToast.error({
           title: "Warning",
           message: "product delete succesfully",
+          
         });
+        
       })
 
     },
@@ -342,18 +346,18 @@ export default {
     },
     product_update(){
             this.form.put("all-product/"+this.form.id)
-            .then(response =>{
-                this.get_all_product();
-                $('#product_modal').modal('hide')
+            .then(response=>{
+                this.get_all_product(),
+                $('#product_modal').modal('hide'),
                 iziToast.success({
                     title: 'Success',
                     message: 'product Update successfully',
                 });
-            })
+            });
               
         },
   },
-  created() {
+  created(){
     this.get_all_product();
     this.get_all_categories();
   },
