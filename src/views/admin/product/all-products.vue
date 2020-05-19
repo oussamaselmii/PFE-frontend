@@ -47,6 +47,7 @@
           </tr>
         </tbody>
       </table>
+                  <pagination :data="products" @pagination-change-page="getResults"></pagination>
 
       <!-- Product Modal -->
       <div
@@ -255,6 +256,12 @@ export default {
     };
   },
   methods: {
+    getResults(page = 1) {
+			axios.get('/all-product?page=' + page)
+				.then(response => {
+					this.products = response.data;
+				});
+		},
     FileChangeEvent(e){
             this.imageUpdateMode=false;
 
@@ -281,7 +288,7 @@ export default {
     RemoveImage(){
     this.imageUpdateMode = false;
 
-    this.form.product_image = "";
+    this.form.product_image = '';
     },
     get_all_product() {
       axios
@@ -345,10 +352,10 @@ export default {
  
     },
     product_update(){
-            this.form.put("all-product/"+this.form.id)
-            .then(response=>{
+            this.form.put("all-product/"+this.form.id).then(response => {
+            
                 this.get_all_product(),
-                $('#product_modal').modal('hide'),
+                $('#product_modal').modal('hide')
                 iziToast.success({
                     title: 'Success',
                     message: 'product Update successfully',
@@ -360,6 +367,8 @@ export default {
   created(){
     this.get_all_product();
     this.get_all_categories();
+    this.getResults();
+
   },
 };
 </script>

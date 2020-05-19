@@ -234,7 +234,7 @@
                                             <router-link :to="{name:'product_details' , params:{product_id:product.id}}"> <img :src="'http://localhost/PFE/back/backend/public/uploads/product_images/'+product.product_image" alt=""></router-link>
                                             <!--a href="#"> <img class="secondary-img" src="../../../assets/frontend/img/product-img/product1.jpg"
                                                     alt=""></a!-->
-                                            <span>hot</span>
+                                            
                                             <div class="product-action">
                                                 <a href="#"><i class="far fa-eye"></i></a>
                                                 <a href="#"><i class="fas fa-balance-scale"></i></a>
@@ -274,9 +274,13 @@
 			</div>
 		</div>
 	</section>
+                                
   <!--Footer-section start-->
     <footer>
+        
+
         <div class="container">
+            <pagination :data="products" @pagination-change-page="getResults"></pagination>
             <div class="footer-area">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-sm-5">
@@ -375,6 +379,12 @@ export default {
         }
     },
     methods: {
+        getResults(page = 1) {
+			axios.get('/all-product?page=' + page)
+				.then(response => {
+					this.products = response.data;
+				});
+		},
         get_all_product() {
       
         axios.get("/all-product")
@@ -390,6 +400,7 @@ export default {
   },
   created() {
       this.get_all_product();
+      this.getResults();
   },
 }
 </script>
