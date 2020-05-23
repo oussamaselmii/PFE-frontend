@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="category , index in categories" >
+    <tr v-for="(category , index) in categories" :key="index" >
       <th scope="row">{{index + 1}}</th>
       <td>{{category.category_name}}</td>
       <td>{{category.category_description}}</td>

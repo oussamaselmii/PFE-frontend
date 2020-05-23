@@ -87,6 +87,21 @@ const routes = [
         name:'all-products',
         component:()=>import('../views/admin/product/all-products.vue'),
        },
+       {
+        path:'all-subcategory',
+        name:'all-subcategory',
+        component:()=>import('../views/admin/category/all_subcategories.vue'),
+       },
+       {
+        path:'add-subcategory',
+        name:'add-subcategory',
+        component:()=>import('../views/admin/category/add_subcategory.vue'),
+       },
+       {
+        path:'edit-subcategory/:subcategory_id',
+        name:'edit-subcategory',
+        component:()=>import('../views/admin/category/edit_subcategory.vue'),
+       },
     ]
    },
 

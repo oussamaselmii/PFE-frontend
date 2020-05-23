@@ -100,7 +100,7 @@
                     :class="{ 'is-invalid': form.errors.has('category_id') }"
                   >
                     <option value="">-------Select a Category--------</option>
-                    <option v-for="(category, index) in categories" :key="index">{{category.category_name}}</option>
+                    <option v-for="(category, index) in subcategories" :key="index">{{category.subcategory_name}}</option>
                     
                   </select>
                   <has-error :form="form" field="category_id"></has-error>
@@ -241,6 +241,8 @@ export default {
     return {
       products: [],
       categories: [],
+      subcategories: [],
+
       editMode:false,
       imageUpdateMode: false,
       form: new Form({
@@ -314,6 +316,18 @@ export default {
                 console.log(error);
             })
         },
+        get_all_subcategories(){
+             axios.get('/subcategory')
+            .then(response =>{
+                // handle success
+                this.subcategories = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        },
     product_add() {
       this.form.post("/all-product").then((response) => {
         this.get_all_product(),
@@ -367,6 +381,7 @@ export default {
   created(){
     this.get_all_product();
     this.get_all_categories();
+    this.get_all_subcategories();
     this.getResults();
 
   },

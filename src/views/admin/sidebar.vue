@@ -30,6 +30,18 @@
                       <p>add category</p>
                     </router-link>
                   </li>
+                  <li class="nav-item">
+                    <router-link :to="{name:'all-subcategory'}" class="nav-link ">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>all subcategory</p>
+                    </router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link :to="{name:'add-subcategory'}" class="nav-link ">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>add subcategory</p>
+                    </router-link>
+                  </li>
                 </ul>
               </li>
               <li class="nav-item has-treeview menu-open">

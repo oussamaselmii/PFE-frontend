@@ -1,39 +1,53 @@
 <template>
   <div>
-   <h2 class="text-center mb-3">Category Add</h2>
-     <form @submit.prevent="category_add()">
+   <h2 class="text-center mb-3">Edit SubCategory</h2>
+     <form @submit.prevent="subcategory_update()">
                   <div class="form-group row">
-                    <label for="category_name" class="col-sm-2 col-form-label"
-                      >Category Name</label>
+                    <label for="subcategory_name" class="col-sm-2 col-form-label"
+                      >SubCategory Name</label
+                    >
                     <div class="col-sm-10">
                       <input
-                      :class="{ 'is-invalid': form.errors.has('category_name') }"
-                      v-model="form.category_name"
+                      :class="{ 'is-invalid': form.errors.has('subcategory_name') }"
+                      v-model="form.subcategory_name"
                         type="text"
-                        name="category_name"
+                        name="subcategory_name"
                         class="form-control"
-                        id="category_name"
-                        placeholder="Enter Category Name"
+                        id="subcategory_name"
+                        placeholder="Enter SubCategory Name"
                       />
-                      <has-error :form="form" field="category_name"></has-error>
+                      <has-error :form="form" field="subcategory_name"></has-error>
                     </div>
                   </div>
 
-                    <div class="form-group row">
-                    <label for="category_description" class="col-sm-2 col-form-label"
-                      >Category Description</label
+                  <div class="form-groupe">
+                  <label for="category_id">subcategory category</label>
+                  <select 
+                    class="form-control"
+                    id="category_id"
+                    v-model="form.category_id"
+                    :class="{ 'is-invalid': form.errors.has('category_id') }">
+                    <option value="">-------Select a Type of Category--------</option>
+                    <option v-for="(category, index) in categories" :key="index">{{category.category_name}}</option>
+                    
+                  </select>
+                  <has-error :form="form" field="category_id"></has-error>
+                </div>
+                  <div class="form-group row">
+                    <label for="subcategory_description" class="col-sm-2 col-form-label"
+                      >SubCategory Description</label
                     >
                     <div class="col-sm-10">
                       <textarea
-                      :class="{ 'is-invalid': form.errors.has('category_description') }"
-                        v-model="form.category_description"
-                        name="category_description"
+                      :class="{ 'is-invalid': form.errors.has('subcategory_description') }"
+                        v-model="form.subcategory_description"
+                        name="subcategory_description"
                         class="form-control"
-                        id="category_description"
+                        id="subcategory_description"
                         
                       >
                       </textarea>
-                      <has-error :form="form" field="category_description"></has-error>
+                      <has-error :form="form" field="subcategory_description"></has-error>
                     </div>
                   </div>
                   <fieldset class="form-group">
@@ -83,7 +97,7 @@
                   
                     <div class="col-sm-10">
                       <button type="submit" class="btn btn-primary">
-                        Add Category
+                        Update SubCategory
                       </button>
                     </div>
                   </div>
@@ -93,31 +107,62 @@
 
 <script>
 import all_categoriesVue from './all_categories.vue';
+import all_subcategoriesVue from './all_subcategories.vue';
+
 export default {
   data() {
+
     return {
+      categories:[],
       form:new Form({
-        category_name:null,
-        category_description:null,
+        subcategory_name:null,
+        category_id:null,
+        subcategory_description:null,
         publication_status:null,
       }),
     }
   },
   methods: {
-    category_add(){
-      this.form.post('/category',this.form)
-  .then(response=> {
-          iziToast.success({
+    get_all_categories(){
+             axios.get('/category')
+            .then(response =>{
+                // handle success
+                this.categories = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        },
+
+    singleSubCategory(){
+      axios.get('/subcategory/'+this.$route.params.subcategory_id)
+      .then(response=>{this.form.fill(response.data);
+      console.log(response.data);
+      })
+
+    },
+
+    subcategory_update(){
+      this.form.put('/subcategory/'+this.$route.params.subcategory_id)
+    .then(response=> {
+      iziToast.info({
               title: 'OK',
-              message: 'Successfully inserted record!',
+              message: 'Successfully update record!',
           });
-    this.$router.push({name:'all-category'});
+    this.$router.push({name:'all-subcategory'});
     console.log(response);
   })
   .catch(function (error) {
     console.log(error);
   });
     }
+  },
+  mounted() {
+    this.singleSubCategory();
+    this.get_all_categories();
+
   },
 
 }
