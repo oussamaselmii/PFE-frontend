@@ -150,7 +150,7 @@
                         <ul>
                             <li><a href="#">Login</a></li>
                             <li><a href="#"><i class="fas fa-heart"></i> (0)</a></li>
-                            <li><a href="#">cart(3)</a>
+                            <li><a href="#">cart({{bagde}})</a>
                                   <div class="card-hover p-3">
                                         <table class="table table-dark table-hover table-bordered">
                                                     <thead>
@@ -165,22 +165,22 @@
                                                     <tbody>
 
 
-                                                    <tr>
-                                                        <td> <img style="width:100%;height:65px" src=""  alt=""></td>
-                                                        <td> <p>pant</p></td>
-                                                        <td>$4545<br>
-                                                       total: $ 564564
+                                                    <tr v-for="(cart, n) in carts" :key="n">
+                                                        <td> <img style="width:100%;height:65px" :src="'http://localhost/PFE/back/backend/public/uploads/product_images/'+cart.image"  alt=""></td>
+                                                        <td> <p>{{cart.name}}</p></td>
+                                                        <td>{{cart.price}} DT<br>
+                                                       
                                                         </td>
                                                         <td  class="position-relative">
-                                                            <a  class="d-inline position-absolute" href="" style="top:-23px;right:13px;"><i class="fas fa-trash-alt text-danger"></i></a>
-                                                            <form action="" method="post" class="mt-4">
+                                                            <a  class="d-inline position-absolute" href="" style="top:-23px;right:13px;"><i class="fas fa-trash-alt text-danger" @click="removeCart(n)"></i></a>
+                                                            <form  class="mt-4">
 
                                                                 <div class="form-group">
-                                                                    <input class="w-100 form-control" type="Number" value="" min="1" name="product_quantity">
+                                                                    <input class="w-100 form-control" type="Number" value="" min="1" v-model="cart.ammount">
                                                                     <input class="w-100" type="hidden" value="" name="product_id">
 
                                                                     <label for="my-input">
-                                                                        <button type="submit" class="btn btn-outline-light mt-1">Update</button>
+                                                                        <button @click="updateCart(n, cart.ammount)" class="btn btn-outline-light mt-1">Update</button>
                                                                     </label>
                                                                 </div>
 
@@ -191,8 +191,8 @@
 
                                             </table>
                                     <div class="total-price clearfix">
-                                        <span class="float-left total-left">Total:</span>
-                                        <span class="float-right total-right">$ 45454</span>
+                                        <span class="float-left total-left">Total: </span>
+                                        <span class="float-right total-right">{{totalprice}} DT</span>
 
                                     </div>
                                     <a href="" class="check-out-botton">Check out</a>
@@ -232,9 +232,8 @@
                                     <div class="product-wrapper">
                                         <div class="product-img">
                                             <router-link :to="{name:'product_details' , params:{product_id:product.id}}"> <img :src="'http://localhost/PFE/back/backend/public/uploads/product_images/'+product.product_image" alt=""></router-link>
-                                            <!--a href="#"> <img class="secondary-img" src="../../../assets/frontend/img/product-img/product1.jpg"
-                                                    alt=""></a!-->
                                             
+                                    
                                             <div class="product-action">
                                                 <a href="#"><i class="far fa-eye"></i></a>
                                                 <a href="#"><i class="fas fa-balance-scale"></i></a>
@@ -252,10 +251,10 @@
                                             </div>
                                             <div class="price">
                                                 <span> {{product.product_price}} DT</span>
-                                                <span><del>$239.9</del></span>
+                                                <span><del>239.9 DT</del></span>
                                             </div>
                                             <div class="cart-btn">
-                                                <form action="" method="POST" class="cart-and-action">
+                                                <form   class="cart-and-action">
 													<div class="">
 														<div class="float-left">
 															<input type="hidden" name="product_quantity" value="1">
@@ -263,7 +262,7 @@
 														</div>
 													</div>
 													<div class="cart-pro">
-														<button class="btn btn-outline-dark btn-lg " type="submit">Add to cart</button>
+														<button @click="addCart(product)" class="btn btn-outline-dark btn-lg " >Add to cart</button>
 													</div>
 												</form>
                                             </div>
@@ -376,9 +375,81 @@ export default {
     data() {
         return {
             products:{},
+            carts : [],
+            cartadd: {
+                id:'',
+                name:'',
+                price:'',
+                image:'',
+                ammount:'',
+                
+            },
+            
+            quantity:'1',
+            totalprice:'0',
+            bagde:'0',
         }
     },
     methods: {
+        viewCart(){
+            if (localStorage.getItem('carts')){
+                this.carts = JSON.parse(localStorage.getItem('carts'));
+                this.bagde = this.carts.length;
+                this.totalprice = this.carts.reduce((total , item)=>{
+                    return total + item.ammount * item.price;
+                },0);
+            }
+        },
+        addCart(pro){
+            
+            for (let i = 0; i < this.carts.length; i++) {
+                let cart = this.carts[i];
+                if (this.cart.id == pro.id) {
+                    this.cart.ammount = +1 ;
+                    
+                }
+                else{
+            
+            this.cartadd.id = pro.id;
+            this.cartadd.name = pro.product_name;
+            this.cartadd.price = pro.product_price;
+            this.cartadd.image = pro.product_image;
+            this.cartadd.ammount = 1 ;
+            this.carts.push(this.cartadd);
+            
+            this.cartadd = {};
+            this.storeCart();
+            }
+            }
+        },
+        updateCart(n, ammount){
+            this.carts = JSON.parse(localStorage.getItem('carts'));
+            let cart = this.carts[n];
+            cart.ammount = ammount;
+            this.$set(this.carts, n, cart);
+            localStorage.setItem('carts',JSON.stringify(this.carts));
+        },
+                
+            
+            
+            
+        
+        removeCart(pro){
+            this.carts.splice(pro, 1);
+            this.storeCart();
+
+        },
+        storeCart(){
+            let parsed = JSON.stringify(this.carts);
+            localStorage.setItem('carts',parsed);
+            this.viewCart();
+        },
+
+
+
+
+
+
         getResults(page = 1) {
 			axios.get('/all-product?page=' + page)
 				.then(response => {
@@ -401,6 +472,7 @@ export default {
   created() {
       this.get_all_product();
       this.getResults();
+      this.viewCart();
   },
 }
 </script>
