@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <!-- Header Area -->
-    <div class="header-section">
+<div>
+      <div class="header-section">
         <div class="container position-relative">
             <div class="row">
                 <div class="col-xl-5 col-md-12 my-xl-5 mb-0 my-sm-3  position-static ">
@@ -214,14 +213,76 @@
             </div>
         </div>
     </div>
-       <!-- Carosel Area start-->
-    
+  <div class="pb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
 
+          <!-- Shopping cart table -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="p-2 px-3 text-uppercase">Product</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Price</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Quantity</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Remove</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(cart, n) in carts" :key="n">
+                  <th scope="row" class="border-0">
+                    <div class="p-2">
+                      <img :src="'http://localhost/PFE/back/backend/public/uploads/product_images/'+cart.image" alt="" width="70" class="img-fluid rounded shadow-sm">
+                      <div class="ml-3 d-inline-block align-middle">
+                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{cart.name}}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: Watches</span>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="border-0 align-middle"><strong>{{cart.price}} DT</strong></td>
+                  <td><input class="w-50 form-control" type="Number" value="" min="1" v-model="cart.ammount">
+                    <button @click="updateCart(n, cart.ammount)" class="btn btn-outline-dark mt-1">Update</button>
+                   </td>
+                  
+                  <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash" @click="removeCart(n)"></i></a></td>
 
-   <!-- Carosel Area end-->
+                  
+                </tr>
+                <br>
+                
+                
+              </tbody>
+                
+            </table>
+            <div class="col-lg-15">
+                  
+                  
+                <li class="d-flex justify-content-between py-3 border-bottom  " ><strong class="text-muted">Total :</strong>
+                <h5 class="font-weight-bold">{{totalprice}} DT</h5>
+              </li>
+              <br>
+              <a href="#" class="btn btn-danger rounded-pill py-2  "> << retour </a>
+                  <router-link href="#" class="btn btn-danger rounded-pill py-2 float-right 	" :to="{name:'checkout'}">continuer >> </router-link>
+                  
+                </div>
+          </div>
+          <!-- End -->
+        </div>
+      </div>
 
-    <!-- normal product area -->
-	<section>
+      
+
+    </div>
+  </div>
+  <section>
 		<div class="container">
 			<div class="row">
 				<div class="col-12"><h3>Latest Product</h3></div>
@@ -273,9 +334,7 @@
 			</div>
 		</div>
 	</section>
-                                
-  <!--Footer-section start-->
-    <footer>
+  <footer>
         
 
         <div class="container">
@@ -366,8 +425,8 @@
             </div>
         </div>
     </footer>
-    <!--Footer-section End-->
-  </div>
+</div>
+
 </template>
 
 <script>
@@ -421,6 +480,9 @@ export default {
             cart.ammount = ammount;
             this.$set(this.carts, n, cart);
             localStorage.setItem('carts',JSON.stringify(this.carts));
+            this.totalprice = this.carts.reduce((total , item)=>{
+                    return total + item.ammount * item.price;
+                },0);
         },
                 
             
@@ -469,3 +531,15 @@ export default {
   },
 }
 </script>
+<style>
+body {
+  background: #eecda3;
+  background: -webkit-linear-gradient(to right, #FFFFFF, #ef629f);
+  background: linear-gradient(to right, #FFFFFF , #FFFAFF );
+  min-height: 100vh;
+}
+.myDiv {
+  
+  text-align: center;
+}
+</style>

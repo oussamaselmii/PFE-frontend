@@ -35,7 +35,6 @@
             </v-flex>
             <v-flex>
               <v-text-field 
-              v-model="user.verif_password"
                 name="confirmPassword"
                 label="confirmPassword"
                 id="confirmPassword"
@@ -64,8 +63,7 @@ export default {
       user:{
         name:null,
         email:null,
-        password:null,
-        
+        password:null
       }
     }
   },
@@ -75,7 +73,6 @@ export default {
                 name:this.user.name ,
                 email:this.user.email ,
                 password:this.user.password ,
-                
             })
             .then(function (response) {
                 

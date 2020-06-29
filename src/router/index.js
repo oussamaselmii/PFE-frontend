@@ -31,6 +31,18 @@ const routes = [
 
       },
       {
+        path: "/panier",
+        name:"panier",
+        component: () =>import("../views/frontend/home/panier.vue"),
+
+      },
+      {
+        path: "/checkout",
+        name:"checkout",
+        component: () =>import("../views/frontend/home/checkout.vue"),
+
+      },
+      {
         path: "/Register",
         name:"Register",
         component: () =>import("../views/frontend/Auth/Register.vue"),
