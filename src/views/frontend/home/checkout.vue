@@ -159,7 +159,7 @@
 
                 <hr>
 
-                <button  class="btn btn-danger rounded-pill py-2 btn-block" type="submit" >Procceed to checkout</button>
+                <button  class="btn btn-danger rounded-pill py-2 btn-block" type="submit" >Valider la Commande</button>
 
               </form>
           </div>
@@ -176,7 +176,7 @@
               <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                 <h5 class="font-weight-bold">{{totalprice}} DT</h5>
               </li>
-            </ul><a href="#" class="btn btn-danger rounded-pill py-2 btn-block">retour au panier</a>
+            </ul><router-link  class="btn btn-danger rounded-pill py-2 btn-block" :to="{name:'panier'}">Retour vers Panier</router-link>
           </div>
         </div>
       </div>
@@ -198,22 +198,67 @@ export default {
         city:null,
         zip:null,
       }),
+      carts : [],
       totalprice:'0',
-            
+      livraison_id : null,
+      user_id:''     
         }
     },
     methods: {
+      
+      userinfo(){
+      axios.get('/user')
+      .then(response => {
+        this.user_id = response.data.id;
+        console.log(response.data.id);
+      })
+    },
+      
         checkout_save(){
-            axios.post('/save_livraison',this.form)
-            .then(function (response) {
-                
+          Swal.fire({
+  title: 'confirmé ?',
+  
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'oui, confirmé !'
+}).then((result) => {
+  if (result.value) {
+    axios.post('/save_livraison',this.form)
+            .then((response)=> {
+              this.livraison_id=response.data.id,
+              this.save_commande();
+                Swal.fire(
+      'félicitations!',
+      'félicitations pour votre achat.',
+      'success'
+    )
                 
                 console.log(response);
-            })
+            });
+      
+
+    
+  }
+})
+            
             .catch(function (error) {
                 console.log(error);
             });      
     },
+    save_commande(){
+      let data = {
+            carts: this.carts
+        }
+    axios.post('/commande', {
+                user_id:this.user_id ,
+                livraison_id:this.livraison_id ,
+                total_price:this.totalprice ,
+                data,
+                })
+                },
+
     viewCart(){
             if (localStorage.getItem('carts')){
                 this.carts = JSON.parse(localStorage.getItem('carts'));
@@ -223,11 +268,18 @@ export default {
                 },0);
             }
         },
+        save_commande_detail(){
+          
+        
+        },
+        
         
     },
 
     
 mounted() {
+  
+   this.userinfo();
     this.viewCart();
     var access_token = localStorage.getItem("AToken");
     if (!access_token) {

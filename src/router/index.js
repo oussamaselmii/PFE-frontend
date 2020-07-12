@@ -114,7 +114,23 @@ const routes = [
         name:'edit-subcategory',
         component:()=>import('../views/admin/category/edit_subcategory.vue'),
        },
+       {
+        path:'all-orders',
+        name:'all-orders',
+        component:()=>import('../views/admin/order/all-orders.vue'),
+       },
+       {
+        path:'order_details/commande/:commande_id/:livraison_id/user/:user_id',
+        name:'order_details',
+        component:()=>import('../views/admin/order/order_details.vue'),
+       },
+       
     ]
+   },
+   {
+    path:'/dashboard/commande/invoice/:commande_id',
+    name:'invoice',
+    component:()=>import('../views/admin/order/invoice.vue'),
    },
 
   
@@ -133,7 +149,8 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
 
-  routes
+  routes,
+  
 });
 
 export default router;

@@ -1,6 +1,8 @@
 <template>
   <div>
-
+      <div>
+<navbar></navbar>
+      </div>
 <!-- Page Title area start -->
     <div class="page-tile-area py-3">
         <div class="container">
@@ -264,7 +266,11 @@
 </template>
 
 <script>
+import navbar  from "../home/navbar";
 export default {
+    components:{
+  navbar:navbar,
+  },
     data() {
         return {
             product:{},

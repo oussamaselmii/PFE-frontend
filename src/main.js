@@ -12,8 +12,8 @@ import axios from "axios";
 import iziTostCss from '../node_modules/izitoast/dist/css/iziToast.min.css'
 import iziTostJs from '../node_modules/izitoast/dist/js/iziToast'
 
-
-
+import Swal from 'sweetalert2';
+window.Swal = Swal ;
 window.iziToast = iziTostJs;
 
 window.axios = axios;
