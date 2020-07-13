@@ -28,7 +28,7 @@
                     v-model="form.category_id"
                     :class="{ 'is-invalid': form.errors.has('category_id') }">
                     <option value="">-------Select a Type of Category--------</option>
-                    <option v-for="(category, index) in categories" :key="index">{{category.category_name}}</option>
+                    <option v-for="(category, index) in categories" :key="index">{{category.id}}</option>
                     
                   </select>
                   <has-error :form="form" field="category_id"></has-error>

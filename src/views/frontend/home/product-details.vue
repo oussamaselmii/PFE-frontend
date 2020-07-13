@@ -10,9 +10,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Library</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data</li>
+                            <li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{product.category_id}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{product.id}}</li>
                         </ol>
                     </nav>
                 </div>
@@ -66,7 +66,7 @@
                             <i class="fas far fa-star"></i>
                             <i class="fas far fa-star"></i>
                             <i class="fas far fa-star"></i>
-                            <span>3 Reating(s) | Add Your Reating(s)</span>
+                            
                         </div>
                         <p>{{product.product_short_description}}</p>
                         <div class="price-pro">
@@ -81,42 +81,23 @@
                             <h3>Options</h3>
                         </div>
 
-                        <form action="#">
-                            <label for="">Size <span>*</span></label>
-                            <select name="" id="">
-                                <option value="#">- Please select - </option>
-                                <option value="1">option 1</option>
-                                <option value="1">option 2</option>
-                                <option value="1">option 3</option>
-                                <option value="1">option 4</option>
-                                <option value="1">option 5</option>
-                            </select>
-                            <label for="">color <span>*</span></label>
-                            <select name="" id="">
-                                <option value="#">- Please select - </option>
-                                <option value="1">option 1</option>
-                                <option value="1">option 2</option>
-                                <option value="1">option 3</option>
-                                <option value="1">option 4</option>
-                                <option value="1">option 5</option>
-                            </select>
-                            <span class="required">Repuired Fiields *</span>
-                        </form>
+                        
                        <form action="" class="cart-and-action">
                         <div class="quanty clearfix mb-5">
-                            <label class="float-left" for="">quantity</label>
+                            <label class="float-left" for="">quantité</label>
                             <div class="float-left">
                             <input type="number" name="product_quantity" id="" min="1">
                             </div>
                         </div>
                         <div class="cart-pro ">
-                            <a href="#">Add to cart</a>
+                            <button @click="addCart(product)" class="btn btn-outline-dark btn-lg " >Ajouter au panier</button>
                         </div>
                      </form>
                 </div>
                 <!-- options-area End -->
                 <div class="cart-and-action clearfix">
                     <div class="product-action-pro">
+                        
                         <a href="#"><i class="far fa-eye"></i></a>
                         <a href="#"><i class="fas fa-balance-scale"></i></a>
                         <a href="#"><i class="fas fa-heart"></i></a>
@@ -136,147 +117,97 @@
                 <li class="nav-item">
                     <a class="nav-link " data-toggle="tab" href="#description" role="tab">Description</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#customer-review" role="tab">Customer Review</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#product-tags" role="tab">Product Tags</a>
-                </li>
+                
+                
             </ul>
             <div class="tab-content pt-4">
                 <div class="tab-pane fade " id="description" role="tabpanel">
                     <p>{{product.product_long_description}}</p>
                 </div>
-                <div class="tab-pane fade" id="customer-review" role="tabpanel">
-                    <div class="more-info">
-                        <p>color</p> <span>Yellow</span>
-                    </div>
-                </div>
-                <div class="tab-pane fade show active" id="product-tags" role="tabpanel">
-                    <div class="product-tags">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>Customer Reviews</p>
-                                <p>The_Blue_Sky</p>
-                                <div class="rating clearfix">
-                                    <p>Price</p>
-                                    <div class="star">
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <span> <i class="fas far fa-star"></i></span>
-                                    </div>
-                                </div>
-                                <div class="rating clearfix">
-                                    <p>Value</p>
-                                    <div class="star">
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <span> <i class="fas far fa-star"></i></span>
-                                    </div>
-                                </div>
-                                <div class="rating clearfix">
-                                    <p>Quality</p>
-                                    <div class="star">
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <i class="fas far fa-star"></i>
-                                        <span> <i class="fas far fa-star"></i></span>
-                                    </div>
-                                </div>
-                                <div class="rating-bottom">
-                                    <p>The_Blue_Sky </p>
-                                    <p> Review by The_Blue_Sky </p>
-                                    <p> Posted on 3/26/16 </p>
-                                </div>
-
-                            </div><!-- col-5 end -->
-                            <div class="col-md-6">
-                                <div class="customer-rating">
-                                    <p>You're reviewing:</p>
-                                    <p>Gobi HeatTec® Tee</p>
-
-                                    <form action="#">
-                                        <div class="form-group row">
-                                            <label class="col-md-3" for="my-input">Yout rating <span>*</span></label>
-                                            <div class="col-md-9">
-                                                <div class="rating clearfix">
-                                                    <p>Price</p>
-                                                    <div class="star">
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <span> <i class="fas far fa-star"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="rating clearfix">
-                                                    <p>Value</p>
-                                                    <div class="star">
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <span> <i class="fas far fa-star"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="rating clearfix">
-                                                    <p>Quality</p>
-                                                    <div class="star">
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <i class="fas far fa-star"></i>
-                                                        <span> <i class="fas far fa-star"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3" for="my-input">Nickname <span>*</span></label>
-                                            <input class="col-md-9 " type="text">
-                                            <span class="massage">This field is required</span>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3" for="my-input">Summary <span>*</span></label>
-                                            <input class="col-md-9 " type="text">
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3" for="my-input">Review <span>*</span></label>
-                                            <textarea class="col-md-9 " rows="1"></textarea>
-
-                                        </div>
-                                        <button type="submit">Submit review</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+                
             </div>
         </div>
     </div>
     <!-- product info end -->
-
+<promotions></promotions>
   </div>
 </template>
 
 <script>
 import navbar  from "../home/navbar";
+import promotions  from "../home/promotions";
 export default {
     components:{
-  navbar:navbar,
+  navbar:navbar,promotions:promotions
   },
     data() {
         return {
             product:{},
+            carts : [],
+            cartadd: {
+                id:'',
+                name:'',
+                price:'',
+                image:'',
+                ammount:'',
+                
+            },
+            
+            quantity:'1',
+            totalprice:'0',
+            bagde:'0',
         }
     },
     methods: {
+        updateCart(n, ammount){
+            this.carts = JSON.parse(localStorage.getItem('carts'));
+            let cart = this.carts[n];
+            cart.ammount = ammount;
+            this.$set(this.carts, n, cart);
+            localStorage.setItem('carts',JSON.stringify(this.carts));
+        },
+                
+            
+            
+            
+        
+        removeCart(pro){
+            this.carts.splice(pro, 1);
+            this.storeCart();
+
+        },
+        storeCart(){
+            let parsed = JSON.stringify(this.carts);
+            localStorage.setItem('carts',parsed);
+            this.viewCart();
+        },
+
+        addCart(pro){
+            
+            
+            this.cartadd.id = pro.id;
+            this.cartadd.name = pro.product_name;
+            this.cartadd.price = pro.product_price;
+            this.cartadd.image = pro.product_image;
+            this.cartadd.ammount = 1 ;
+            this.carts.push(this.cartadd);
+            
+            this.cartadd = {};
+            this.storeCart();
+            
+            
+        },
+        viewCart(){
+            if (localStorage.getItem('carts')){
+                this.carts = JSON.parse(localStorage.getItem('carts'));
+                this.bagde = this.carts.length;
+                this.totalprice = this.carts.reduce((total , item)=>{
+                    return total + item.ammount * item.price;
+                },0);
+            }
+        },
+
         get_single_product(){
             axios.get('/all-product/'+this.$route.params.product_id)
             .then (response=>{
@@ -286,6 +217,7 @@ export default {
     },
     created() {
         this.get_single_product();
+        this.viewCart();
     },
 
 }

@@ -25,6 +25,12 @@ const routes = [
 
       },
       {
+        path: "/category-details/:subcategory_name",
+        name:"category_details",
+        component: () =>import("../views/frontend/home/category-details.vue"),
+
+      },
+      {
         path: "/home",
         name:"home-page",
         component: () =>import("../views/frontend/home/home.vue"),
@@ -34,6 +40,12 @@ const routes = [
         path: "/panier",
         name:"panier",
         component: () =>import("../views/frontend/home/panier.vue"),
+
+      },
+      {
+        path: "/promotions",
+        name:"promotions",
+        component: () =>import("../views/frontend/home/promotions.vue"),
 
       },
       {
